@@ -48,7 +48,28 @@ public class ClientController {
 				LOGGER.severe("Invalid event type: " + eventType);
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10002));
 			}else {
-				return ResponseEntity.ok((JsonResult)service.getListEvents(shipId,eventType));	
+				return ResponseEntity.ok((JsonResult)service.getListEventsByShip(shipId,eventType));	
+			}
+			
+		}catch (Exception e) {
+			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10000));
+		}
+	}
+	
+	@CrossOrigin
+	@GetMapping(path = "/portHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<JsonResult> portHistory(@RequestParam String portId, @RequestParam String eventType){
+		try {
+			if(!service.existPort(portId)) {
+				LOGGER.severe("The ship does not exist: " + portId);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10003));
+			}else if(!validateEventType(eventType)) {
+				LOGGER.severe("Invalid event type: " + eventType);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10004));
+			}else {
+				return ResponseEntity.ok((JsonResult)service.getListEventsByPort(portId,eventType));	
 			}
 			
 		}catch (Exception e) {

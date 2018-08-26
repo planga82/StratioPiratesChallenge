@@ -40,7 +40,7 @@ public class ClientControllerTest {
 	public void traveHistoryOk() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(true);
-		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(),Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByShip(Mockito.anyString(),Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
 		.andDo(print())
@@ -51,7 +51,7 @@ public class ClientControllerTest {
 	public void traveHistoryNotExistShip() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(false);
-		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(), Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByShip(Mockito.anyString(), Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
 		.andDo(print())
@@ -62,11 +62,44 @@ public class ClientControllerTest {
 	public void traveHistoryInvalidTypeEvent() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(true);
-		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(),Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByShip(Mockito.anyString(),Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", "XXXX"))
 		.andDo(print())
 		.andExpect(status().isBadRequest());
 	}
 
+	
+	@Test
+	public void traveHistoryPortOk() throws Exception {
+		
+		given(service.existPort(Mockito.anyString())).willReturn(true);
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByPort(Mockito.anyString(),Mockito.anyString());
+		
+		mvc.perform(get(GeneralConstants.URL_BASE + "/client/portHistory").contentType(APPLICATION_JSON).param("portId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
+		.andDo(print())
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void traveHistoryPortNotExistPort() throws Exception {
+		
+		given(service.existPort(Mockito.anyString())).willReturn(false);
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByPort(Mockito.anyString(), Mockito.anyString());
+		
+		mvc.perform(get(GeneralConstants.URL_BASE + "/client/portHistory").contentType(APPLICATION_JSON).param("portId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
+		.andDo(print())
+		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void traveHistoryPortInvalidTypeEvent() throws Exception {
+		
+		given(service.existPort(Mockito.anyString())).willReturn(true);
+		Mockito.doReturn(new ListEvents()).when(service).getListEventsByPort(Mockito.anyString(),Mockito.anyString());
+		
+		mvc.perform(get(GeneralConstants.URL_BASE + "/client/portHistory").contentType(APPLICATION_JSON).param("portId", "1").param("eventType", "XXXX"))
+		.andDo(print())
+		.andExpect(status().isBadRequest());
+	}
 }

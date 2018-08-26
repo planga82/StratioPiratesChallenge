@@ -28,7 +28,11 @@ public class ClientService {
 		return repository.existsByShip(shipId);
 	}
 	
-	public ListEvents getListEvents(String ship, String eventType){
+	public boolean existPort(String shipId) {
+		throw new RuntimeException();
+	}
+	
+	public ListEvents getListEventsByShip(String ship, String eventType){
 		
 		List<EventDao> list = null;
 		if(eventType.equals(GeneralConstants.EVENT_ALL)) {
@@ -39,9 +43,12 @@ public class ClientService {
 			
 		}
 		
-		
-		
 		return new ListEvents(eventDaoToEvent(list));
+	}
+	
+	public ListEvents getListEventsByPort(String port, String eventType){
+		
+		throw new RuntimeException();
 	}
 	
 	private List<EventDao> getAllEvents(String ship){
@@ -52,7 +59,7 @@ public class ClientService {
 		List<Event> ret = new ArrayList<Event>();
 		for (Iterator<EventDao> iterator = list.iterator(); iterator.hasNext();) {
 			EventDao eventDao = iterator.next();
-			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
+			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
 		}
 		return ret;
 	}

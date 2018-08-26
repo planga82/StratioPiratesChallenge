@@ -5,6 +5,7 @@ public class Event{
 	private String timeStamp;
 	private String eventType;
 	private String portId;
+	private String shipId;
 	private Long goldCoins;
 	private Long drumBarrels;
 	
@@ -12,14 +13,19 @@ public class Event{
 		super();
 	}
 
-	public Event(String timeStamp, String eventType, String portId, Long goldCoins, Long drumBarrels) {
+	
+
+	public Event(String timeStamp, String eventType, String portId, String shipId, Long goldCoins, Long drumBarrels) {
 		super();
 		this.timeStamp = timeStamp;
 		this.eventType = eventType;
 		this.portId = portId;
+		this.shipId = shipId;
 		this.goldCoins = goldCoins;
 		this.drumBarrels = drumBarrels;
 	}
+
+
 
 	public String getTimeStamp() {
 		return timeStamp;
@@ -60,6 +66,19 @@ public class Event{
 	public void setDrumBarrels(Long drumBarrels) {
 		this.drumBarrels = drumBarrels;
 	}
+	
+
+	public String getShipId() {
+		return shipId;
+	}
+
+
+
+	public void setShipId(String shipId) {
+		this.shipId = shipId;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -69,9 +88,12 @@ public class Event{
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + ((goldCoins == null) ? 0 : goldCoins.hashCode());
 		result = prime * result + ((portId == null) ? 0 : portId.hashCode());
+		result = prime * result + ((shipId == null) ? 0 : shipId.hashCode());
 		result = prime * result + ((timeStamp == null) ? 0 : timeStamp.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -102,6 +124,11 @@ public class Event{
 				return false;
 		} else if (!portId.equals(other.portId))
 			return false;
+		if (shipId == null) {
+			if (other.shipId != null)
+				return false;
+		} else if (!shipId.equals(other.shipId))
+			return false;
 		if (timeStamp == null) {
 			if (other.timeStamp != null)
 				return false;
@@ -110,14 +137,14 @@ public class Event{
 		return true;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Event [timeStamp=" + timeStamp + ", eventType=" + eventType + ", portId=" + portId + ", goldCoins="
-				+ goldCoins + ", drumBarrels=" + drumBarrels + "]";
+		return "Event [timeStamp=" + timeStamp + ", eventType=" + eventType + ", portId=" + portId + ", shipId="
+				+ shipId + ", goldCoins=" + goldCoins + ", drumBarrels=" + drumBarrels + "]";
 	}
-	
-	
-	
+
 	
 	
 	

@@ -8,6 +8,8 @@ public class GeneralConstants {
 	public static final String CODE_10000 = "10000";
 	public static final String CODE_10001 = "10001";
 	public static final String CODE_10002 = "10002";
+	public static final String CODE_10003 = "10003";
+	public static final String CODE_10004 = "10004";
 	
 	
 	public static final String EVENT_ARRIVAL = "A";
