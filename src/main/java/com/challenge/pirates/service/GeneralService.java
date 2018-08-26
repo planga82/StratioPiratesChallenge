@@ -22,7 +22,7 @@ import com.challenge.pirates.util.GeneralConstants;
 
 
 @Service
-public class ClientService {
+public class GeneralService {
 
 	@Autowired
 	EventsRepository eventRepository;
@@ -67,7 +67,7 @@ public class ClientService {
 	}
 	
 	public void createEvent(Event event) {
-		throw new RuntimeException();
+		eventRepository.save(eventToEventDao(event));
 	}
 	
 	private List<EventDao> getAllEventsByShip(String ship){
@@ -97,6 +97,10 @@ public class ClientService {
 	
 	private Stock stockDaoToStock(StockDao sotckDao) {
 		return new Stock(sotckDao.getPort(), sotckDao.getGoldCoins(), sotckDao.getDrimBarrels());
+	}
+	
+	private EventDao eventToEventDao(Event event) {
+		return new EventDao(null, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), event.getTimeStamp());
 	}
 	
 	

@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.challenge.pirates.domain.ListEvents;
 import com.challenge.pirates.domain.Stock;
-import com.challenge.pirates.service.ClientService;
+import com.challenge.pirates.service.GeneralService;
 import com.challenge.pirates.util.GeneralConstants;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -35,7 +35,7 @@ public class ClientControllerTest {
 	private MockMvc mvc;
 	
 	@MockBean
-	private ClientService service;
+	private GeneralService service;
 	
 	@Test
 	public void traveHistoryOk() throws Exception {

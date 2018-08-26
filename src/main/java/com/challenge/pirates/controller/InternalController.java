@@ -19,7 +19,7 @@ import com.challenge.pirates.domain.ErrorResponse;
 import com.challenge.pirates.domain.Event;
 import com.challenge.pirates.domain.JsonResult;
 import com.challenge.pirates.domain.SuccessResponse;
-import com.challenge.pirates.service.ClientService;
+import com.challenge.pirates.service.GeneralService;
 import com.challenge.pirates.util.GeneralConstants;
 
 
@@ -30,7 +30,7 @@ public class InternalController {
 	private static final Logger LOGGER = Logger.getLogger( InternalController.class.getName() );
 
 	@Autowired
-	private ClientService service;
+	private GeneralService service;
 	
 	@CrossOrigin
 	@GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
