@@ -10,5 +10,9 @@ public interface EventsRepository extends CrudRepository<EventDao, Long> {
 
     List<EventDao> findAllByShip(String ship);
     
+    List<EventDao> findAllByPort(String port);
+    
     Boolean existsByShip(String ship);
+    
+    Boolean existsByPort(String port);
 }
