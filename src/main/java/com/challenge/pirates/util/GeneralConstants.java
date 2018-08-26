@@ -17,6 +17,6 @@ public class GeneralConstants {
 	public static final String EVENT_ALL = "ALL";
 	
 	
-	
+	public static final String SUCCESS_CREATED = "Successfully created";
 	public static final String INTERNAL_SERVER_ERROR = "Internal server error";
 }

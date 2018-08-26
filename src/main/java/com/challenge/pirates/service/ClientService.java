@@ -66,6 +66,10 @@ public class ClientService {
 		return stockDaoToStock(stockRepository.findByPort(port));
 	}
 	
+	public void createEvent(Event event) {
+		throw new RuntimeException();
+	}
+	
 	private List<EventDao> getAllEventsByShip(String ship){
 		return eventRepository.findAllByShip(ship);
 	}
