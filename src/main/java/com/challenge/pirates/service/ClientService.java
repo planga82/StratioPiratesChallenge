@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.challenge.pirates.dao.EventsRepository;
+import com.challenge.pirates.dao.StockRepository;
 import com.challenge.pirates.domain.Event;
 import com.challenge.pirates.domain.ListEvents;
 import com.challenge.pirates.domain.Stock;
 import com.challenge.pirates.entities.EventDao;
+import com.challenge.pirates.entities.StockDao;
 import com.challenge.pirates.util.GeneralConstants;
 
 
@@ -24,6 +26,9 @@ public class ClientService {
 
 	@Autowired
 	EventsRepository eventRepository;
+	
+	@Autowired
+	StockRepository stockRepository;
 	
 	public boolean existShip(String shipId) {
 		return eventRepository.existsByShip(shipId);
@@ -58,7 +63,7 @@ public class ClientService {
 	}
 	
 	public Stock getStock(String port) {
-		throw new RuntimeException();
+		return stockDaoToStock(stockRepository.findByPort(port));
 	}
 	
 	private List<EventDao> getAllEventsByShip(String ship){
@@ -84,6 +89,10 @@ public class ClientService {
 			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
 		}
 		return ret;
+	}
+	
+	private Stock stockDaoToStock(StockDao sotckDao) {
+		return new Stock(sotckDao.getPort(), sotckDao.getGoldCoins(), sotckDao.getDrimBarrels());
 	}
 	
 	
