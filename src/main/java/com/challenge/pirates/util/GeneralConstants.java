@@ -12,6 +12,7 @@ public class GeneralConstants {
 	
 	public static final String EVENT_ARRIVAL = "A";
 	public static final String EVENT_DEPARTURE = "D";
+	public static final String EVENT_ALL = "ALL";
 	
 	
 	

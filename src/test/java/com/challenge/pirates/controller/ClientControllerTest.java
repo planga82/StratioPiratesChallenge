@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.challenge.pirates.domain.listEvents;
+import com.challenge.pirates.domain.ListEvents;
 import com.challenge.pirates.service.ClientService;
 import com.challenge.pirates.util.GeneralConstants;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -40,7 +40,7 @@ public class ClientControllerTest {
 	public void traveHistoryOk() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(true);
-		Mockito.doReturn(new listEvents()).when(service).getListEvents(Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(),Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
 		.andDo(print())
@@ -51,7 +51,7 @@ public class ClientControllerTest {
 	public void traveHistoryNotExistShip() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(false);
-		Mockito.doReturn(new listEvents()).when(service).getListEvents(Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(), Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", GeneralConstants.EVENT_ARRIVAL))
 		.andDo(print())
@@ -62,7 +62,7 @@ public class ClientControllerTest {
 	public void traveHistoryInvalidTypeEvent() throws Exception {
 		
 		given(service.existShip(Mockito.anyString())).willReturn(true);
-		Mockito.doReturn(new listEvents()).when(service).getListEvents(Mockito.anyString());
+		Mockito.doReturn(new ListEvents()).when(service).getListEvents(Mockito.anyString(),Mockito.anyString());
 		
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/travelHistory").contentType(APPLICATION_JSON).param("shipId", "1").param("eventType", "XXXX"))
 		.andDo(print())

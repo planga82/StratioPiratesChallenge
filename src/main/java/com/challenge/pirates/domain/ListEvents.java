@@ -2,15 +2,15 @@ package com.challenge.pirates.domain;
 
 import java.util.List;
 
-public class listEvents extends JsonResult{
+public class ListEvents extends JsonResult{
 
 	private List<Event> events;
 
-	public listEvents() {
+	public ListEvents() {
 		super();
 	}
 
-	public listEvents(List<Event> events) {
+	public ListEvents(List<Event> events) {
 		super();
 		this.events = events;
 	}
@@ -39,7 +39,7 @@ public class listEvents extends JsonResult{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		listEvents other = (listEvents) obj;
+		ListEvents other = (ListEvents) obj;
 		if (events == null) {
 			if (other.events != null)
 				return false;

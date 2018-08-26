@@ -48,7 +48,7 @@ public class ClientController {
 				LOGGER.severe("Invalid event type: " + eventType);
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10002));
 			}else {
-				return ResponseEntity.ok((JsonResult)service.getListEvents(shipId));	
+				return ResponseEntity.ok((JsonResult)service.getListEvents(shipId,eventType));	
 			}
 			
 		}catch (Exception e) {
@@ -58,7 +58,7 @@ public class ClientController {
 	}
 	
 	private boolean validateEventType(String eventType) {
-		return eventType.equals(GeneralConstants.EVENT_ARRIVAL) || eventType.equals(GeneralConstants.EVENT_DEPARTURE);
+		return eventType.equals(GeneralConstants.EVENT_ARRIVAL) || eventType.equals(GeneralConstants.EVENT_DEPARTURE) || eventType.equals(GeneralConstants.EVENT_ALL);
 	}
 	
 	
