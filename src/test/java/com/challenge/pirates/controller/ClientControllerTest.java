@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.challenge.pirates.domain.ListEvents;
+import com.challenge.pirates.domain.Stock;
 import com.challenge.pirates.service.ClientService;
 import com.challenge.pirates.util.GeneralConstants;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -101,5 +102,16 @@ public class ClientControllerTest {
 		mvc.perform(get(GeneralConstants.URL_BASE + "/client/portHistory").contentType(APPLICATION_JSON).param("portId", "1").param("eventType", "XXXX"))
 		.andDo(print())
 		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void stockOk() throws Exception {
+		
+		given(service.existPort(Mockito.anyString())).willReturn(true);
+		Mockito.doReturn(new Stock()).when(service).getStock(Mockito.anyString());
+		
+		mvc.perform(get(GeneralConstants.URL_BASE + "/client/portStock").contentType(APPLICATION_JSON).param("portId", "1"))
+		.andDo(print())
+		.andExpect(status().isOk());
 	}
 }

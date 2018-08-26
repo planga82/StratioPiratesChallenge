@@ -78,6 +78,24 @@ public class ClientController {
 		}
 	}
 	
+	@CrossOrigin
+	@GetMapping(path = "/portStock", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<JsonResult> portStock(@RequestParam String portId){
+		try {
+			if(!service.existPort(portId)) {
+				LOGGER.severe("The ship does not exist: " + portId);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10003));
+			}else{
+				return ResponseEntity.ok((JsonResult)service.getStock(portId)) ;	
+			}
+			
+		}catch (Exception e) {
+			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10000));
+		}
+	}
+	
 	private boolean validateEventType(String eventType) {
 		return eventType.equals(GeneralConstants.EVENT_ARRIVAL) || eventType.equals(GeneralConstants.EVENT_DEPARTURE) || eventType.equals(GeneralConstants.EVENT_ALL);
 	}

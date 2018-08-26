@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.challenge.pirates.dao.EventsRepository;
 import com.challenge.pirates.domain.Event;
 import com.challenge.pirates.domain.ListEvents;
+import com.challenge.pirates.domain.Stock;
 import com.challenge.pirates.entities.EventDao;
 import com.challenge.pirates.util.GeneralConstants;
 
@@ -22,14 +23,14 @@ import com.challenge.pirates.util.GeneralConstants;
 public class ClientService {
 
 	@Autowired
-	EventsRepository repository;
+	EventsRepository eventRepository;
 	
 	public boolean existShip(String shipId) {
-		return repository.existsByShip(shipId);
+		return eventRepository.existsByShip(shipId);
 	}
 	
 	public boolean existPort(String portId) {
-		return repository.existsByPort(portId);
+		return eventRepository.existsByPort(portId);
 	}
 	
 	public ListEvents getListEventsByShip(String ship, String eventType){
@@ -56,20 +57,24 @@ public class ClientService {
 		return new ListEvents(eventDaoToEvent(list));
 	}
 	
+	public Stock getStock(String port) {
+		throw new RuntimeException();
+	}
+	
 	private List<EventDao> getAllEventsByShip(String ship){
-		return repository.findAllByShip(ship);
+		return eventRepository.findAllByShip(ship);
 	}
 	
 	private List<EventDao> getAllEventsByShipEventType(String ship, String eventType){
-		return repository.findAllByShipAndEventType(ship, eventType);
+		return eventRepository.findAllByShipAndEventType(ship, eventType);
 	}
 	
 	private List<EventDao> getAllEventsByPort(String port){
-		return repository.findAllByPort(port);
+		return eventRepository.findAllByPort(port);
 	}
 	
 	private List<EventDao> getAllEventsByPortEventType(String port, String eventType){
-		return repository.findAllByPortAndEventType(port, eventType);
+		return eventRepository.findAllByPortAndEventType(port, eventType);
 	}
 	
 	private List<Event> eventDaoToEvent(List<EventDao> list) {
