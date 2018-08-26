@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.challenge.pirates.dao.EventsRepository;
 import com.challenge.pirates.dao.StockRepository;
 import com.challenge.pirates.domain.Event;
+import com.challenge.pirates.domain.InitialStock;
 import com.challenge.pirates.domain.ListEvents;
 import com.challenge.pirates.domain.Stock;
 import com.challenge.pirates.entities.EventDao;
@@ -70,6 +71,10 @@ public class GeneralService {
 		eventRepository.save(eventToEventDao(event));
 	}
 	
+	public void loadInitialStock(InitialStock stockList) {
+		stockRepository.saveAll(stockTostockDao(stockList.getStockList()));
+	}
+	
 	private List<EventDao> getAllEventsByShip(String ship){
 		return eventRepository.findAllByShip(ship);
 	}
@@ -91,6 +96,15 @@ public class GeneralService {
 		for (Iterator<EventDao> iterator = list.iterator(); iterator.hasNext();) {
 			EventDao eventDao = iterator.next();
 			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
+		}
+		return ret;
+	}
+	
+	private List<StockDao> stockTostockDao(List<Stock> list) {
+		List<StockDao> ret = new ArrayList<StockDao>();
+		for (Iterator<Stock> iterator = list.iterator(); iterator.hasNext();) {
+			Stock stock = iterator.next();
+			ret.add(new StockDao(null, stock.getPort(), stock.getGoldCoins(), stock.getDrimBarrels()));
 		}
 		return ret;
 	}

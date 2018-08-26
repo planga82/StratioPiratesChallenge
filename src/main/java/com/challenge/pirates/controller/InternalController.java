@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.pirates.domain.ErrorResponse;
 import com.challenge.pirates.domain.Event;
+import com.challenge.pirates.domain.InitialStock;
 import com.challenge.pirates.domain.JsonResult;
 import com.challenge.pirates.domain.SuccessResponse;
 import com.challenge.pirates.service.GeneralService;
@@ -49,6 +50,23 @@ public class InternalController {
 			 * En un sistema real si habría que realizarlas al estilo de la clase ClientController
 			 */
 			service.createEvent(event);
+			return ResponseEntity.status(HttpStatus.CREATED).body((JsonResult)new SuccessResponse(GeneralConstants.SUCCESS_CREATED));
+		}catch (Exception e) {
+			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10000));
+		}
+	}
+	
+	@CrossOrigin
+	@PostMapping(path = "/loadInitialStock", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<JsonResult> loadInitialStock(@RequestBody InitialStock stockList){
+		try {
+			/*
+			 * Como es un servicio interno, no voy a realizar la validación de los campos de entrada
+			 * En un sistema real si habría que realizarlas al estilo de la clase ClientController
+			 */
+			service.loadInitialStock(stockList);
 			return ResponseEntity.status(HttpStatus.CREATED).body((JsonResult)new SuccessResponse(GeneralConstants.SUCCESS_CREATED));
 		}catch (Exception e) {
 			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
