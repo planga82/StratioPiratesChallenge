@@ -37,10 +37,8 @@ public class ClientService {
 		List<EventDao> list = null;
 		if(eventType.equals(GeneralConstants.EVENT_ALL)) {
 			list = getAllEventsByShip(ship);
-		}else if(eventType.equals(GeneralConstants.EVENT_ARRIVAL)) {
-			
-		}else if(eventType.equals(GeneralConstants.EVENT_DEPARTURE)) {
-			
+		}else{
+			list = getAllEventsByShipEventType(ship, eventType);
 		}
 		
 		return new ListEvents(eventDaoToEvent(list));
@@ -51,10 +49,8 @@ public class ClientService {
 		List<EventDao> list = null;
 		if(eventType.equals(GeneralConstants.EVENT_ALL)) {
 			list = getAllEventsByPort(port);
-		}else if(eventType.equals(GeneralConstants.EVENT_ARRIVAL)) {
-			
-		}else if(eventType.equals(GeneralConstants.EVENT_DEPARTURE)) {
-			
+		}else{
+			list = getAllEventsByPortEventType(port, eventType);
 		}
 		
 		return new ListEvents(eventDaoToEvent(list));
@@ -64,8 +60,16 @@ public class ClientService {
 		return repository.findAllByShip(ship);
 	}
 	
+	private List<EventDao> getAllEventsByShipEventType(String ship, String eventType){
+		return repository.findAllByShipAndEventType(ship, eventType);
+	}
+	
 	private List<EventDao> getAllEventsByPort(String port){
 		return repository.findAllByPort(port);
+	}
+	
+	private List<EventDao> getAllEventsByPortEventType(String port, String eventType){
+		return repository.findAllByPortAndEventType(port, eventType);
 	}
 	
 	private List<Event> eventDaoToEvent(List<EventDao> list) {

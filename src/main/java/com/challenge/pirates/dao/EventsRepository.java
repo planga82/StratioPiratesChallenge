@@ -2,7 +2,9 @@ package com.challenge.pirates.dao;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.challenge.pirates.entities.EventDao;
 
@@ -10,7 +12,13 @@ public interface EventsRepository extends CrudRepository<EventDao, Long> {
 
     List<EventDao> findAllByShip(String ship);
     
+    @Query(nativeQuery=true, value="select * from EventDao e where e.ship = :ship and e.eventType = :eventType")
+    List<EventDao> findAllByShipAndEventType(@Param("ship") String ship, @Param("eventType") String eventType);
+    
     List<EventDao> findAllByPort(String port);
+    
+    @Query(nativeQuery=true, value="select * from EventDao e where e.port = :port and e.eventType = :eventType")
+    List<EventDao> findAllByPortAndEventType(@Param("port") String port, @Param("eventType") String eventType);
     
     Boolean existsByShip(String ship);
     
