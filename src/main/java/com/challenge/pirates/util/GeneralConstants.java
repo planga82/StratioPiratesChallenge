@@ -1,6 +1,8 @@
 package com.challenge.pirates.util;
 
 public class GeneralConstants {
+	
+	private GeneralConstants() {}
 
 	public static final String VERSION_BASE = "/v1";
 	public static final String URL_BASE = "/pirates/challenge/api" + VERSION_BASE;

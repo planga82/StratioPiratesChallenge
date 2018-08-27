@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.challenge.pirates.dao.EventsRepository;
 import com.challenge.pirates.dao.StockRepository;
@@ -17,6 +18,7 @@ import com.challenge.pirates.domain.ListEvents;
 import com.challenge.pirates.domain.Stock;
 import com.challenge.pirates.entities.EventDao;
 import com.challenge.pirates.entities.StockDao;
+import com.challenge.pirates.exceptions.PiratesException;
 import com.challenge.pirates.util.GeneralConstants;
 
 
@@ -67,8 +69,34 @@ public class GeneralService {
 		return stockDaoToStock(stockRepository.findByPort(port));
 	}
 	
-	public void createEvent(Event event) {
+	
+	public void createEventAndUpdateStock(Event event) throws PiratesException {
+		updateBBDD(event);
+	}
+	
+	@Transactional
+	private void updateBBDD(Event event) throws PiratesException {
+		updateEvent(event);
+		updateStock(event);
+	}
+	
+	private void updateEvent(Event event) {
 		eventRepository.save(eventToEventDao(event));
+	}
+	private void updateStock(Event event) throws PiratesException {
+		StockDao stock = stockRepository.findByPort(event.getPortId());
+		
+		if(event.getEventType().equals(GeneralConstants.EVENT_ARRIVAL)){
+			stock.setDrimBarrels(stock.getDrimBarrels()+event.getDrumBarrels());
+			stock.setGoldCoins(stock.getGoldCoins()+event.getGoldCoins());
+		}else if(event.getEventType().equals(GeneralConstants.EVENT_DEPARTURE)){
+			stock.setDrimBarrels(stock.getDrimBarrels()-event.getDrumBarrels());
+			stock.setGoldCoins(stock.getGoldCoins()-event.getGoldCoins());
+		}else {
+			throw new PiratesException("Invalid type of event");
+		}
+		
+		stockRepository.save(stock);
 	}
 	
 	public void loadInitialStock(InitialStock stockList) {

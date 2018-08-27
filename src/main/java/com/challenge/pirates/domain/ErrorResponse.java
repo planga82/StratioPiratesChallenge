@@ -7,7 +7,7 @@ public class ErrorResponse extends JsonResult{
 
 	private static final String ERROR_FILE = "errorCodes.properties";
 	
-	private int internal_code;
+	private int internalCode;
 	private String message;
 	
 	
@@ -15,7 +15,7 @@ public class ErrorResponse extends JsonResult{
 	public ErrorResponse(String code) {
 		super();
 		
-		this.internal_code = Integer.parseInt(code);
+		this.internalCode = Integer.parseInt(code);
 		
 		Properties prop = new Properties();
 		try {
@@ -30,7 +30,7 @@ public class ErrorResponse extends JsonResult{
 	}
 
 	public int getInternal_code() {
-		return internal_code;
+		return internalCode;
 	}
 
 	public String getMessage() {
@@ -41,7 +41,7 @@ public class ErrorResponse extends JsonResult{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + internal_code;
+		result = prime * result + internalCode;
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		return result;
 	}
@@ -55,7 +55,7 @@ public class ErrorResponse extends JsonResult{
 		if (getClass() != obj.getClass())
 			return false;
 		ErrorResponse other = (ErrorResponse) obj;
-		if (internal_code != other.internal_code)
+		if (internalCode != other.internalCode)
 			return false;
 		if (message == null) {
 			if (other.message != null)
@@ -67,7 +67,7 @@ public class ErrorResponse extends JsonResult{
 
 	@Override
 	public String toString() {
-		return "ErrorResponse [internal_code=" + internal_code + ", message=" + message + "]";
+		return "ErrorResponse [internal_code=" + internalCode + ", message=" + message + "]";
 	}
 	
 	

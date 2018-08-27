@@ -12,12 +12,12 @@ public interface EventsRepository extends CrudRepository<EventDao, Long> {
 
     List<EventDao> findAllByShip(String ship);
     
-    @Query(nativeQuery=true, value="select * from EventDao e where e.ship = :ship and e.eventType = :eventType")
+    @Query(nativeQuery=true, value="select * from EVENT_DAO e where e.ship = :ship and e.EVENT_TYPE = :eventType")
     List<EventDao> findAllByShipAndEventType(@Param("ship") String ship, @Param("eventType") String eventType);
     
     List<EventDao> findAllByPort(String port);
     
-    @Query(nativeQuery=true, value="select * from EventDao e where e.port = :port and e.eventType = :eventType")
+    @Query(nativeQuery=true, value="select * from EVENT_DAO e where e.port = :port and e.EVENT_TYPE = :eventType")
     List<EventDao> findAllByPortAndEventType(@Param("port") String port, @Param("eventType") String eventType);
     
     Boolean existsByShip(String ship);

@@ -1,6 +1,5 @@
 package com.challenge.pirates.domain;
 
-import java.io.IOException;
 
 public class SuccessResponse extends JsonResult{
 
@@ -10,7 +9,7 @@ public class SuccessResponse extends JsonResult{
 		super();
 		}
 	
-	public SuccessResponse(String message) throws IOException {
+	public SuccessResponse(String message){
 		
 		this.message = message;
 	}

@@ -49,7 +49,7 @@ public class InternalController {
 			 * Como es un servicio interno, no voy a realizar la validación de los campos de entrada
 			 * En un sistema real si habría que realizarlas al estilo de la clase ClientController
 			 */
-			service.createEvent(event);
+			service.createEventAndUpdateStock(event);
 			return ResponseEntity.status(HttpStatus.CREATED).body((JsonResult)new SuccessResponse(GeneralConstants.SUCCESS_CREATED));
 		}catch (Exception e) {
 			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
