@@ -5,6 +5,7 @@ package com.challenge.pirates.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +28,17 @@ import com.challenge.pirates.util.GeneralConstants;
 @Service
 public class GeneralService {
 
+	private static final Logger LOGGER = Logger.getLogger( GeneralService.class.getName() );
+	
 	@Autowired
 	EventsRepository eventRepository;
 	
 	@Autowired
 	StockRepository stockRepository;
+	
+	@Autowired
+	ReplicasService replicasService;
+		
 	
 	public boolean existShip(String shipId) {
 		return eventRepository.existsByShip(shipId);
@@ -70,8 +77,10 @@ public class GeneralService {
 	}
 	
 	
-	public void createEventAndUpdateStock(Event event) throws PiratesException {
+	public void createEventAndUpdateStock(Event event) throws PiratesException, InterruptedException {
 		updateBBDD(event);
+		replicasService.updateReplicas(event);
+		LOGGER.info("createEventAndUpdateStock finished");
 	}
 	
 	@Transactional
@@ -144,6 +153,8 @@ public class GeneralService {
 	private EventDao eventToEventDao(Event event) {
 		return new EventDao(null, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), event.getTimeStamp());
 	}
+	
+	
 	
 	
 }
