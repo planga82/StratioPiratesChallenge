@@ -20,6 +20,7 @@ import com.challenge.pirates.domain.Event;
 import com.challenge.pirates.domain.InitialStock;
 import com.challenge.pirates.domain.JsonResult;
 import com.challenge.pirates.domain.SuccessResponse;
+import com.challenge.pirates.entities.EventDao;
 import com.challenge.pirates.service.GeneralService;
 import com.challenge.pirates.util.GeneralConstants;
 
@@ -50,6 +51,23 @@ public class InternalController {
 			 * En un sistema real si habría que realizarlas al estilo de la clase ClientController
 			 */
 			service.createEventAndUpdateStock(event);
+			return ResponseEntity.status(HttpStatus.CREATED).body((JsonResult)new SuccessResponse(GeneralConstants.SUCCESS_CREATED));
+		}catch (Exception e) {
+			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10000));
+		}
+	}
+	
+	@CrossOrigin
+	@PostMapping(path = "/uptadeReplica", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<JsonResult> uptadeReplica(@RequestBody EventDao event){
+		try {
+			/*
+			 * Como es un servicio interno, no voy a realizar la validación de los campos de entrada
+			 * En un sistema real si habría que realizarlas al estilo de la clase ClientController
+			 */
+			service.createEventAndUpdateStockReplica(event);
 			return ResponseEntity.status(HttpStatus.CREATED).body((JsonResult)new SuccessResponse(GeneralConstants.SUCCESS_CREATED));
 		}catch (Exception e) {
 			LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);

@@ -5,6 +5,7 @@ package com.challenge.pirates.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,20 +79,29 @@ public class GeneralService {
 	
 	
 	public void createEventAndUpdateStock(Event event) throws PiratesException, InterruptedException {
-		updateBBDD(event);
-		replicasService.updateReplicas(event);
+		EventDao eventSaved = updateBBDD(event);
+		replicasService.updateReplicas(eventSaved);
 		LOGGER.info("createEventAndUpdateStock finished");
 	}
 	
-	@Transactional
-	private void updateBBDD(Event event) throws PiratesException {
-		updateEvent(event);
-		updateStock(event);
+	public void createEventAndUpdateStockReplica(EventDao event) throws PiratesException, InterruptedException {
+		event.setId(null);
+		eventRepository.save(event);
+		updateStock(new Event(event.getTime(), event.getEventType(), event.getPort(), event.getShip(), event.getGoldCoins(), event.getDrimBarrels()));
 	}
 	
-	private void updateEvent(Event event) {
-		eventRepository.save(eventToEventDao(event));
+	@Transactional
+	public EventDao updateBBDD(Event event) throws PiratesException {
+		EventDao eventSaved = updateEvent(event);
+		updateStock(event);
+		return eventSaved;
 	}
+	
+	private EventDao updateEvent(Event event) {
+		String uuid = UUID.randomUUID().toString();
+		return eventRepository.save(eventToEventDao(event,uuid));		
+	}
+	
 	private void updateStock(Event event) throws PiratesException {
 		StockDao stock = stockRepository.findByPort(event.getPortId());
 		
@@ -129,7 +139,7 @@ public class GeneralService {
 	}
 	
 	private List<Event> eventDaoToEvent(List<EventDao> list) {
-		List<Event> ret = new ArrayList<Event>();
+		List<Event> ret = new ArrayList<>();
 		for (Iterator<EventDao> iterator = list.iterator(); iterator.hasNext();) {
 			EventDao eventDao = iterator.next();
 			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
@@ -138,7 +148,7 @@ public class GeneralService {
 	}
 	
 	private List<StockDao> stockTostockDao(List<Stock> list) {
-		List<StockDao> ret = new ArrayList<StockDao>();
+		List<StockDao> ret = new ArrayList<>();
 		for (Iterator<Stock> iterator = list.iterator(); iterator.hasNext();) {
 			Stock stock = iterator.next();
 			ret.add(new StockDao(null, stock.getPort(), stock.getGoldCoins(), stock.getDrimBarrels()));
@@ -150,8 +160,8 @@ public class GeneralService {
 		return new Stock(sotckDao.getPort(), sotckDao.getGoldCoins(), sotckDao.getDrimBarrels());
 	}
 	
-	private EventDao eventToEventDao(Event event) {
-		return new EventDao(null, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), event.getTimeStamp());
+	private EventDao eventToEventDao(Event event, String uuid) {
+		return new EventDao(null,uuid, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), event.getTimeStamp());
 	}
 	
 	

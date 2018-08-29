@@ -17,6 +17,9 @@ public class EventDao implements Serializable{
 	private Long id;
 	
 	@Column
+	private String UUID;	
+	
+	@Column
 	private String eventType;
 	
 	@Column
@@ -38,10 +41,11 @@ public class EventDao implements Serializable{
 		super();
 	}
 
-	public EventDao(Long id, String eventType, String ship, String port, Long goldCoins, Long drimBarrels,
+	public EventDao(Long id, String uUID, String eventType, String ship, String port, Long goldCoins, Long drimBarrels,
 			String time) {
 		super();
 		this.id = id;
+		UUID = uUID;
 		this.eventType = eventType;
 		this.ship = ship;
 		this.port = port;
@@ -56,6 +60,14 @@ public class EventDao implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUUID() {
+		return UUID;
+	}
+
+	public void setUUID(String uUID) {
+		UUID = uUID;
 	}
 
 	public String getEventType() {
@@ -105,10 +117,80 @@ public class EventDao implements Serializable{
 	public void setTime(String time) {
 		this.time = time;
 	}
-	
-	
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((UUID == null) ? 0 : UUID.hashCode());
+		result = prime * result + ((drimBarrels == null) ? 0 : drimBarrels.hashCode());
+		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
+		result = prime * result + ((goldCoins == null) ? 0 : goldCoins.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((port == null) ? 0 : port.hashCode());
+		result = prime * result + ((ship == null) ? 0 : ship.hashCode());
+		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EventDao other = (EventDao) obj;
+		if (UUID == null) {
+			if (other.UUID != null)
+				return false;
+		} else if (!UUID.equals(other.UUID))
+			return false;
+		if (drimBarrels == null) {
+			if (other.drimBarrels != null)
+				return false;
+		} else if (!drimBarrels.equals(other.drimBarrels))
+			return false;
+		if (eventType == null) {
+			if (other.eventType != null)
+				return false;
+		} else if (!eventType.equals(other.eventType))
+			return false;
+		if (goldCoins == null) {
+			if (other.goldCoins != null)
+				return false;
+		} else if (!goldCoins.equals(other.goldCoins))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (port == null) {
+			if (other.port != null)
+				return false;
+		} else if (!port.equals(other.port))
+			return false;
+		if (ship == null) {
+			if (other.ship != null)
+				return false;
+		} else if (!ship.equals(other.ship))
+			return false;
+		if (time == null) {
+			if (other.time != null)
+				return false;
+		} else if (!time.equals(other.time))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "EventDao [id=" + id + ", UUID=" + UUID + ", eventType=" + eventType + ", ship=" + ship + ", port="
+				+ port + ", goldCoins=" + goldCoins + ", drimBarrels=" + drimBarrels + ", time=" + time + "]";
+	}
+
 	
 	
 	

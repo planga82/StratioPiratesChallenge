@@ -17,6 +17,9 @@ public class EventReplicaDao implements Serializable{
 	private Long id;
 	
 	@Column
+	private String UUID;	
+	
+	@Column
 	private String eventType;
 	
 	@Column
@@ -41,11 +44,11 @@ public class EventReplicaDao implements Serializable{
 		super();
 	}
 
-	
-	public EventReplicaDao(Long id, String eventType, String ship, String port, Long goldCoins, Long drimBarrels,
-			String time, String hostPort) {
+	public EventReplicaDao(String uUID, String eventType, String ship, String port, Long goldCoins,
+			Long drimBarrels, String time, String hostPort) {
 		super();
-		this.id = id;
+		this.id = null;
+		UUID = uUID;
 		this.eventType = eventType;
 		this.ship = ship;
 		this.port = port;
@@ -55,13 +58,20 @@ public class EventReplicaDao implements Serializable{
 		this.hostPort = hostPort;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUUID() {
+		return UUID;
+	}
+
+	public void setUUID(String uUID) {
+		UUID = uUID;
 	}
 
 	public String getEventType() {
@@ -112,21 +122,19 @@ public class EventReplicaDao implements Serializable{
 		this.time = time;
 	}
 
-
 	public String getHostPort() {
 		return hostPort;
 	}
-
 
 	public void setHostPort(String hostPort) {
 		this.hostPort = hostPort;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((UUID == null) ? 0 : UUID.hashCode());
 		result = prime * result + ((drimBarrels == null) ? 0 : drimBarrels.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + ((goldCoins == null) ? 0 : goldCoins.hashCode());
@@ -138,7 +146,6 @@ public class EventReplicaDao implements Serializable{
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -148,6 +155,11 @@ public class EventReplicaDao implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		EventReplicaDao other = (EventReplicaDao) obj;
+		if (UUID == null) {
+			if (other.UUID != null)
+				return false;
+		} else if (!UUID.equals(other.UUID))
+			return false;
 		if (drimBarrels == null) {
 			if (other.drimBarrels != null)
 				return false;
@@ -191,18 +203,11 @@ public class EventReplicaDao implements Serializable{
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "EventReplicaDao [id=" + id + ", eventType=" + eventType + ", ship=" + ship + ", port=" + port
-				+ ", goldCoins=" + goldCoins + ", drimBarrels=" + drimBarrels + ", time=" + time + ", hostPort="
-				+ hostPort + "]";
+		return "EventReplicaDao [id=" + id + ", UUID=" + UUID + ", eventType=" + eventType + ", ship=" + ship
+				+ ", port=" + port + ", goldCoins=" + goldCoins + ", drimBarrels=" + drimBarrels + ", time=" + time
+				+ ", hostPort=" + hostPort + "]";
 	}
-	
-	
-	
-	
-	
-	
 	
 }
