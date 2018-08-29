@@ -169,5 +169,9 @@ public class GeneralService {
 		return eventRepository.findAllUUID(time);
 	}
 	
+	public EventDao getEventByUUID(String uuid) {
+		return eventRepository.findByUUID(uuid);
+	}
+	
 	
 }

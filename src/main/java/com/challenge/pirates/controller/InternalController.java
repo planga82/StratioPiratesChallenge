@@ -109,5 +109,17 @@ public class InternalController {
 		
 	}
 	
+	@CrossOrigin
+	@GetMapping(path = "/getEventByUUID", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<JsonResult> getEventByUUID(@RequestParam String uuid){
+			try {
+				return ResponseEntity.ok((JsonResult)service.getEventByUUID(uuid));
+			}catch (Exception e) {
+				LOGGER.log(Level.SEVERE, GeneralConstants.INTERNAL_SERVER_ERROR, e);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body((JsonResult)new ErrorResponse(GeneralConstants.CODE_10000));
+			}		
+	}
+	
 	
 }

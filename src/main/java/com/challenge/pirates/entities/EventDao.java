@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.challenge.pirates.domain.JsonResult;
+
 @Entity
-public class EventDao implements Serializable{
+public class EventDao  extends JsonResult implements Serializable{
 
 	private static final long serialVersionUID = -7740444078502066724L;
 
@@ -17,7 +19,7 @@ public class EventDao implements Serializable{
 	private Long id;
 	
 	@Column
-	private String UUID;	
+	private String uUID;	
 	
 	@Column
 	private String eventType;
@@ -45,7 +47,7 @@ public class EventDao implements Serializable{
 			Long time) {
 		super();
 		this.id = id;
-		UUID = uUID;
+		this.uUID = uUID;
 		this.eventType = eventType;
 		this.ship = ship;
 		this.port = port;
@@ -63,11 +65,11 @@ public class EventDao implements Serializable{
 	}
 
 	public String getUUID() {
-		return UUID;
+		return uUID;
 	}
 
 	public void setUUID(String uUID) {
-		UUID = uUID;
+		this.uUID = uUID;
 	}
 
 	public String getEventType() {
@@ -122,7 +124,7 @@ public class EventDao implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((UUID == null) ? 0 : UUID.hashCode());
+		result = prime * result + ((uUID == null) ? 0 : uUID.hashCode());
 		result = prime * result + ((drimBarrels == null) ? 0 : drimBarrels.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + ((goldCoins == null) ? 0 : goldCoins.hashCode());
@@ -142,10 +144,10 @@ public class EventDao implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		EventDao other = (EventDao) obj;
-		if (UUID == null) {
-			if (other.UUID != null)
+		if (uUID == null) {
+			if (other.uUID != null)
 				return false;
-		} else if (!UUID.equals(other.UUID))
+		} else if (!uUID.equals(other.uUID))
 			return false;
 		if (drimBarrels == null) {
 			if (other.drimBarrels != null)
@@ -187,7 +189,7 @@ public class EventDao implements Serializable{
 
 	@Override
 	public String toString() {
-		return "EventDao [id=" + id + ", UUID=" + UUID + ", eventType=" + eventType + ", ship=" + ship + ", port="
+		return "EventDao [id=" + id + ", UUID=" + uUID + ", eventType=" + eventType + ", ship=" + ship + ", port="
 				+ port + ", goldCoins=" + goldCoins + ", drimBarrels=" + drimBarrels + ", time=" + time + "]";
 	}
 

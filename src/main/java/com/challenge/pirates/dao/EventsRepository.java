@@ -26,4 +26,6 @@ public interface EventsRepository extends CrudRepository<EventDao, Long> {
     
     @Query(nativeQuery=true, value="select UUID from EVENT_DAO e where e.time < :time")
     List<String> findAllUUID(@Param("time") Long time);
+    
+    EventDao findByUUID(String UUID);
 }
