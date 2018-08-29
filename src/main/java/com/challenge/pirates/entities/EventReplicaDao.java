@@ -35,7 +35,7 @@ public class EventReplicaDao implements Serializable{
 	private Long drimBarrels;
 	
 	@Column
-	private String time;
+	private Long time;
 	
 	@Column
 	private String hostPort;
@@ -45,7 +45,7 @@ public class EventReplicaDao implements Serializable{
 	}
 
 	public EventReplicaDao(String uUID, String eventType, String ship, String port, Long goldCoins,
-			Long drimBarrels, String time, String hostPort) {
+			Long drimBarrels, Long time, String hostPort) {
 		super();
 		this.id = null;
 		UUID = uUID;
@@ -114,11 +114,11 @@ public class EventReplicaDao implements Serializable{
 		this.drimBarrels = drimBarrels;
 	}
 
-	public String getTime() {
+	public Long getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Long time) {
 		this.time = time;
 	}
 

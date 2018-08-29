@@ -35,14 +35,14 @@ public class EventDao implements Serializable{
 	private Long drimBarrels;
 	
 	@Column
-	private String time;
+	private Long time;
 
 	public EventDao() {
 		super();
 	}
 
 	public EventDao(Long id, String uUID, String eventType, String ship, String port, Long goldCoins, Long drimBarrels,
-			String time) {
+			Long time) {
 		super();
 		this.id = id;
 		UUID = uUID;
@@ -110,11 +110,11 @@ public class EventDao implements Serializable{
 		this.drimBarrels = drimBarrels;
 	}
 
-	public String getTime() {
+	public Long getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Long time) {
 		this.time = time;
 	}
 

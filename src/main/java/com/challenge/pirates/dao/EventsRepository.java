@@ -23,4 +23,7 @@ public interface EventsRepository extends CrudRepository<EventDao, Long> {
     Boolean existsByShip(String ship);
     
     Boolean existsByPort(String port);
+    
+    @Query(nativeQuery=true, value="select UUID from EVENT_DAO e where e.time < :time")
+    List<String> findAllUUID(@Param("time") Long time);
 }

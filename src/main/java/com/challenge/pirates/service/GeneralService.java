@@ -87,7 +87,7 @@ public class GeneralService {
 	public void createEventAndUpdateStockReplica(EventDao event) throws PiratesException, InterruptedException {
 		event.setId(null);
 		eventRepository.save(event);
-		updateStock(new Event(event.getTime(), event.getEventType(), event.getPort(), event.getShip(), event.getGoldCoins(), event.getDrimBarrels()));
+		updateStock(new Event(event.getTime().toString(), event.getEventType(), event.getPort(), event.getShip(), event.getGoldCoins(), event.getDrimBarrels()));
 	}
 	
 	@Transactional
@@ -142,7 +142,7 @@ public class GeneralService {
 		List<Event> ret = new ArrayList<>();
 		for (Iterator<EventDao> iterator = list.iterator(); iterator.hasNext();) {
 			EventDao eventDao = iterator.next();
-			ret.add(new Event(eventDao.getTime(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
+			ret.add(new Event(eventDao.getTime().toString(), eventDao.getEventType(), eventDao.getPort(), eventDao.getShip(), eventDao.getGoldCoins(), eventDao.getDrimBarrels()));
 		}
 		return ret;
 	}
@@ -161,10 +161,13 @@ public class GeneralService {
 	}
 	
 	private EventDao eventToEventDao(Event event, String uuid) {
-		return new EventDao(null,uuid, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), event.getTimeStamp());
+		return new EventDao(null,uuid, event.getEventType(), event.getShipId(), event.getPortId(), event.getGoldCoins(), event.getDrumBarrels(), Long.parseLong(event.getTimeStamp()));
 	}
 	
 	
+	public List<String> getAllUUIDs(Long time){
+		return eventRepository.findAllUUID(time);
+	}
 	
 	
 }
